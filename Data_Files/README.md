@@ -9,37 +9,29 @@ Do not commit credentials or restricted data.
 
 | File | Source | Geography | Year | Notes |
 |---|---|---|---|---|
-| `qcew_2024_a_focus.csv` | BLS QCEW | Ingham, Eaton, Clinton, Lansing–East Lansing MSA | 2024 annual | Employment and wages by ownership and selected industries (all, manufacturing, 336, education, public administration) |
-| `lodes_wac_county_totals_2021.csv` | Census LODES WAC | Same 3 counties | 2021 | Workplace job counts by county. `C000` is total jobs. |
-| `acs_census_reporter_lansing.csv` | ACS via Census Reporter | MSA, 3 counties, Lansing, East Lansing | ACS 2024 | Population, income, poverty, commute, industry of workers |
-| `load_lansing_sources.py` | — | — | — | Reloads QCEW, LODES, ACS, and catalogs budget/tax PDFs |
+| `qcew_2024_a_focus.csv` | BLS QCEW | Ingham, Eaton, Clinton, Lansing-East Lansing MSA | 2024 annual | Employment and wages by ownership and selected industries |
+| `lodes_wac_county_totals_2021.csv` | Census LODES WAC | Same 3 counties | 2021 | Workplace job counts by county. `C000` is total jobs |
+| `acs_key_indicators_lansing.csv` | ACS via Census Reporter | MSA, 3 counties, Lansing, East Lansing | ACS 2024 5-year | Population, income, poverty, commute, selected industries |
+| `load_lansing_sources.py` | -- | -- | -- | Reloads QCEW, LODES, and ACS |
 
 ## How to refresh
 
 ```bash
 pip install pandas requests lxml
-python Data_Files/load_lansing_sources.py --year 2024 --qtr a --skip-docs
+python Data_Files/load_lansing_sources.py --year 2024 --qtr a
 ```
 
-Optional keys for extra series:
-
-```bash
-export CENSUS_API_KEY=...
-export BLS_API_KEY=...
-export BEA_API_KEY=...
-```
-
-The script writes additional large extracts (full QCEW, block-level LODES) next to itself under `lansing_data/tables/`. Those files are not committed because they are regenerable and large.
+The script writes additional large extracts under `Data_Files/lansing_data/tables/`. Those files are regenerable and are not committed.
 
 ## QCEW ownership codes
 
 - `0` total
 - `1` federal
-- `2` state government
+- `2` state government (includes public universities)
 - `3` local government
 - `5` private
 
-State government employment in QCEW includes public universities. Do not add an MSU headcount on top of `own_code == 2`.
+Do not add an MSU headcount on top of `own_code == 2`.
 
 ## QCEW industry stand-ins
 
@@ -49,9 +41,3 @@ State government employment in QCEW includes public universities. Do not add an 
 - `611` educational services
 - `92` public administration
 - `921` executive, legislative, and other general government
-
-## LODES columns used for wealth retention
-
-- `C000` total jobs
-- `CE01` / `CE02` / `CE03` jobs by earnings band
-- `CNS*` jobs by NAICS sector
