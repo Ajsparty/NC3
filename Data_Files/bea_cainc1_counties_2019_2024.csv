@@ -1,0 +1,10 @@
+GeoFIPS,GeoName,county_name,LineCode,Description,Unit,2019,2020,2021,2022,2023,2024
+26037,"Clinton, MI",Clinton,1,Personal income (thousands of dollars) ,Thousands of dollars,3759551,4040451,4455404,4571388,4818011,5047746
+26037,"Clinton, MI",Clinton,2,Population (persons) 1/,Number of persons,79013,79171,79432,79652,79823,80050
+26037,"Clinton, MI",Clinton,3,Per capita personal income (dollars) 2/,Dollars,47581,51034,56091,57392,60359,63057
+26045,"Eaton, MI",Eaton,1,Personal income (thousands of dollars) ,Thousands of dollars,4754177,5209315,5560956,5598260,5887618,6163753
+26045,"Eaton, MI",Eaton,2,Population (persons) 1/,Number of persons,109181,109199,108921,108962,109072,109494
+26045,"Eaton, MI",Eaton,3,Per capita personal income (dollars) 2/,Dollars,43544,47705,51055,51378,53979,56293
+26065,"Ingham, MI",Ingham,1,Personal income (thousands of dollars) ,Thousands of dollars,11975197,13205383,14104435,14263470,14915446,15717804
+26065,"Ingham, MI",Ingham,2,Population (persons) 1/,Number of persons,285787,285007,271662,284761,287710,290427
+26065,"Ingham, MI",Ingham,3,Per capita personal income (dollars) 2/,Dollars,41903,46334,51919,50089,51842,54120
