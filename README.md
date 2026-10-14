@@ -1,6 +1,6 @@
 # NC3 — Lansing Economic Ecosystem and Community Wealth Analysis
 
-Team NC3 workspace for a capstone project with the Lansing Growth Fund. This repository holds team management documents, project deliverables, individual working files, and project data used to estimate how Lansing's largest institutional actors affect local jobs, the tax base, and community wealth retention.
+Workspace for analysis of Lansing's economic ecosystem and community wealth with the Lansing Growth Fund. This repository holds project documents, deliverables, working files, and data used to estimate how Lansing's largest institutional actors affect local jobs, the tax base, and community wealth retention.
 
 ## Project Overview
 
@@ -32,7 +32,7 @@ A lightweight GIS layer that shows where economic pressure and institutional pre
 
 ## Repository Structure
 
-This repository is the main organizational space for Team NC3. Keep the folder structure clear so teammates and instructors can find files quickly.
+This repository is the main organizational space for the NC3 analysis. Keep the folder structure clear so collaborators can find files quickly.
 
 | Folder | Purpose |
 | --- | --- |
@@ -69,7 +69,7 @@ The project relies primarily on public and partner-accessible datasets that can 
 - Public institutional budget and procurement disclosures
 - Regional economic-development data resources
 
-Prefer sources that are stable, well documented, and reproducible so the scorecard can be maintained after the semester. Proprietary data may be used only when access is reliable and definitions support recurring updates.
+Prefer sources that are stable, well documented, and reproducible so the scorecard can be maintained ongoing. Proprietary data may be used only when access is reliable and definitions support recurring updates.
 
 The team should maintain a **data bibliography** that records datasets, source links, update cadence, geographic coverage, and key field notes. At a minimum, the bibliography should start with Census-based sources that anchor the public-data baseline.
 
@@ -126,16 +126,16 @@ Stretch goals:
 
 ## Project Risks and Backup Plan
 
-The largest risk is scope expansion beyond what one capstone team can complete with available data. Additional risks include limited access to proprietary institutional information and inconsistent definitions across public data sources.
+The largest risk is scope expansion beyond what the team can complete with available data. Additional risks include limited access to proprietary institutional information and inconsistent definitions across public data sources.
 
 **Backup plan:** prioritize a public-data baseline scorecard with a documented methodology and a limited set of high-value indicators. If deeper institutional data cannot be obtained in time, still deliver a reproducible pipeline, a usable core scorecard, and explicit recommendations for future data partnerships. Treat dashboard expansion and GIS features as stretch goals.
 
 ## NDA and Intellectual Property
 
-No NDA or IP agreement is currently expected. If non-public institutional data are introduced, clarify data access and sharing terms with the partner and instructional team before use.
+No NDA or IP agreement is currently expected. If non-public institutional data are introduced, clarify data access and sharing terms with the partner before use.
 
 This repository is licensed under the [MIT License](LICENSE).
 
 ## README Maintenance
 
-Update this README whenever the team adds, removes, or reorganizes major folders or important project files. Keep the folder structure clear so instructors and teammates can quickly find what they need.
+Update this README whenever the team adds, removes, or reorganizes major folders or important project files. Keep the folder structure clear so collaborators can quickly find what they need.
