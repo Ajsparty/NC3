@@ -214,5 +214,20 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
+# NC3 project-specific environments
+.envs/
+envs/
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+
+# Local credentials
+*.key
+.env.local
+
+# Regenerable large NC3 data extracts
+Data_Files/lansing_data/tables/
+
 # Streamlit
 .streamlit/secrets.toml
