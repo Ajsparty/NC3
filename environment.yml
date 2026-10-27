@@ -1,0 +1,24 @@
+name: nc3
+
+channels:
+  - conda-forge
+  - defults
+
+dependencies:
+  #Python version currently used by NC3 team
+  - python=3.9.20
+
+  #Core data analysis and visualization packages
+  - pandas=2.2
+  - numpy=1.26.4
+  - matplotlib=3.9
+  - seaborn=0.13
+  - requests=2.32
+
+  # Supports common public-data formats and future refresh workflows.
+  - lxml=5.3
+
+  # Notebook environment.
+  - jupyterlab=4.3
+  - notebook=7.3
+  - ipykernel=6.29
