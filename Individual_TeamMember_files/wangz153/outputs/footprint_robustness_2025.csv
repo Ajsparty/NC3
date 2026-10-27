@@ -1,0 +1,11 @@
+indicator,claim,test_A,test_B,verdict
+E1,GM is the smallest of the Big 4,State Government > MSU > Local Government > GM,Local Government > MSU > State Government > GM,Robust
+E1,State Government is the largest of the Big 4,State Government,Local Government,Not supported
+E2,GM is under 3% of regional jobs,2.1%,2.9%,Robust
+E5,Big 4 hold at least 1 in 7 regional jobs (>14%),15.9%,26.9%,Robust
+E3,GM jobs pay above the regional average,1.32x (all of 336),1.48x (GM est.),Robust
+E3,MSU jobs pay above the regional average,no second source,1.32x,Robust (one source)
+E3,State Government jobs pay above the regional average,no second source,1.34x,Robust (one source)
+E4,MSU employment grew,LEAP 2016-25: -4.4%,QCEW 2019-25: +1.7%,Not supported
+E4,GM employment grew,LEAP 2016-25: -12.9%,QCEW 2019-25: +28.5%,Not supported
+E4,State Government employment grew,LEAP 2016-25: +1.3%,QCEW 2019-25: +17.6%,Directional
