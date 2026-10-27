@@ -58,7 +58,7 @@ def load_qcew(s: requests.Session, year: int, qtr: str) -> pd.DataFrame:
         frames.append(df)
         time.sleep(0.2)
     out = pd.concat(frames, ignore_index=True)
-    keep_ind = out["industry_code"].isin(["10", "31-33", "336", "611", "92", "921"])
+    keep_ind = out["industry_code"].isin(["10", "31-33", "336", "3361", "33611", "336111", "3363", "611", "92", "921"])
     slim = out.loc[keep_ind | (out["industry_code"] == "10")].copy()
     save_df(out, f"qcew_{year}_{qtr}_full")
     save_df(slim if not slim.empty else out, f"qcew_{year}_{qtr}_focus")
