@@ -26,6 +26,12 @@ state files or full ACFR PDFs. The files in this folder are filtered extracts.
 | `ipeds_msu_salaries_2023.csv` | IPEDS instructional staff salaries | MSU | 2023 | Staff counts and salary outlays by rank, contract, and sex. |
 | `lansing_acfr_fy2025_principal_taxpayers.csv` | City of Lansing ACFR FY2025, Table 7 (p. 189), from Lansing City Assessor | City of Lansing | tax years 2025 and 2016 | Top 10 taxpayers by taxable value, long format. GM appears twice in 2025 (`General Motors LLC` + `General Motors Co.`, flagged `big4_flag = GM`). `Ultium Cell LLC` is the former GM joint venture, now LG Energy Solution — not GM. Row sums match published totals. |
 | `lansing_acfr_fy2025_principal_employers.csv` | City of Lansing ACFR FY2025, Table 15 (p. 197), from LEAP top-employers list | Greater Lansing Region | 2025 and 2016 | Top 10 employers with headcount and share of metro employment (211,208 in 2025; 229,466 in 2016). Covers State of Michigan, MSU, and GM. 2016 LCC rank is printed as 4 in the source but is 5 by count; kept as published with a note. |
+| `acs_commuting_flows_2016_2020_tri.csv` | Census ACS 2016–2020 county-to-county commuting flows (table1.xlsx) | Flows with residence or workplace in Ingham, Eaton, Clinton | 2016–2020 5-year | Survey-based workers by residence county × workplace county, with MOE. Second source for local-resident job capture (W1). |
+| `lodes_od_tri_workplace_2021_agg.csv.gz` | Census LODES8 OD 2021, main + aux, with block crosswalk | Workplace blocks in the 3 counties | 2021 | Jobs by workplace block × residence county / place / county subdivision, with workplace block lat/lon. Used for institution-level footprints and city-income-tax residency. Aggregated from the raw files; regenerate with `load_retention_sources.py`. |
+| `load_retention_sources.py` | — | — | — | Downloads the ACS commuting flows and LODES OD files and writes the two extracts above. |
+| `lansing_gm_parcel_inventory.csv` | City of Lansing BS&A Name search 'GENERAL MOTORS' | City of Lansing (Ingham + Eaton PA 425 area) | 2026 listing | All 34 GM records: parcel type (real / personal / IFT), active or inactive, plant site, and whether detail was collected. |
+| `lansing_gm_area_parcels_values.csv` | City of Lansing BS&A parcel records (manual export) | 8 parcels | tax years 2023–2026 | Assessed, SEV, taxable value. GM: Delta Township plant real property, 3 IFT-abated buildings (certificates expire 2027–2028), 3 personal-property accounts (plant equipment is 100% exempt). Plus LG Energy Solution battery plant (former GM JV, **not GM**; Renaissance Zone to 2040). These GM LLC parcels explain 89% of ACFR Table 7 'General Motors LLC' for 2025. |
+| `lansing_gm_area_parcels_tax_bills.csv` | City of Lansing BS&A tax history (screenshots) | Same 8 parcels | 2019–2026 summer/winter bills | Total tax billed per bill. Implied rates: ≈77–87 mills full rate; ≈41–44 mills on IFT parcels (half rate); ≈5–8 mills on the Renaissance Zone plant. Screenshot-to-parcel matching was checked with these implied rates. |
 | `source_catalog.csv` | — | — | — | Bibliography, refresh cadence, and sources that are PDF or manual export only. |
 | `load_lansing_sources.py` | — | — | — | Reloads QCEW, LODES, and ACS. |
 
@@ -36,7 +42,16 @@ pip install pandas requests lxml
 python Data_Files/load_lansing_sources.py --year 2025 --qtr a
 ```
 
-The script writes additional large extracts under `Data_Files/lansing_data/tables/`. Those files are regenerable and are not committed.
+For the retention sources (ACS commuting flows and LODES OD):
+
+```bash
+pip install pandas requests openpyxl
+python Data_Files/load_retention_sources.py
+```
+
+Raw downloads go to `Data_Files/lansing_data/raw/` and are not committed.
+
+The main loader writes additional large extracts under `Data_Files/lansing_data/tables/`. Those files are regenerable and are not committed.
 
 Annual replacements that are not in the loader:
 
@@ -98,4 +113,21 @@ What this means for GM (2019–2025 extract):
 - **`3363` suppliers**: published for Ingham all years; suppressed for Eaton 2020–2025 and Clinton 2019, 2023–2025.
 - Cross-check: LEAP/ACFR Table 15 lists GM at 4,549 regional employees in 2025, below the QCEW-based estimate. Report GM employment as a range, not a single number.
 - Data quality flag: Clinton `336` in 2023 shows employment rising to 643 while wages fall (avg pay $54,834 vs ~$100k other years). Treat 2023 Clinton `336` as suspect.
+
+## Commuting sources disagree (read before using LODES OD)
+
+For jobs located in Ingham County, the share held by residents of the 3 counties is
+**54% in LODES 2021** but **86% in ACS 2016–2020**. LODES assigns residence from
+administrative address records (for example, a student worker's permanent family
+address), while ACS records where the worker actually lives. Treat LODES as a
+lower bound on local capture and ACS as the central estimate; report both.
+
+## Parcel data notes (City of Lansing, BS&A)
+
+- Parcels starting `33-` are Ingham real property, `23-` Eaton real property under the
+  Lansing–Delta Township PA 425 agreement, `90-` personal property, `95-` IFT-abated parcels.
+- GM plant equipment (personal property) shows **$0 taxable** — eligible manufacturing
+  personal property is exempt under Michigan law.
+- Parcel values and tax bills were transcribed by hand from BS&A screenshots and PDF
+  exports on 2026-10-27. Re-check against BS&A before publishing figures.
 

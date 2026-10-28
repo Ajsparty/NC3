@@ -228,6 +228,7 @@ Thumbs.db
 
 # Regenerable large NC3 data extracts
 Data_Files/lansing_data/tables/
+Data_Files/lansing_data/raw/
 
 # Streamlit
 .streamlit/secrets.toml
