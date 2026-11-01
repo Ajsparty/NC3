@@ -150,3 +150,44 @@ def index_to(series: pd.Series, base_year: int) -> pd.Series:
 def hhi(shares_pct: pd.Series) -> float:
     """Herfindahl-Hirschman index from shares given in percent (0-100)."""
     return float((shares_pct ** 2).sum())
+
+# ---------------------------------------------------------------------------
+# Loaders added for 02_retention
+# ---------------------------------------------------------------------------
+
+TRI_FIPS = set(TRI_COUNTY)  # {"26065", "26045", "26037"}
+
+
+def load_lodes_od() -> pd.DataFrame:
+    """LODES8 2021 OD, aggregated to workplace block x residence county/place.
+    Rows cover every job whose workplace block is in the 3 counties."""
+    df = pd.read_csv(DATA_DIR / "lodes_od_tri_workplace_2021_agg.csv.gz",
+                     dtype={"w_geocode": str, "h_county": str, "w_county": str, "w_tract": str})
+    df["w_tract11"] = df["w_geocode"].str[:11]
+    df["h_in_region"] = df["h_county"].isin(TRI_FIPS)
+    return df
+
+
+def load_acs_flows() -> pd.DataFrame:
+    """ACS 2016-2020 county-to-county commuting flows touching the 3 counties."""
+    df = pd.read_csv(DATA_DIR / "acs_commuting_flows_2016_2020_tri.csv",
+                     dtype={"res_fips": str, "work_fips": str})
+    df["res_in_region"] = df["res_fips"].isin(TRI_FIPS)
+    return df
+
+
+def load_parcels() -> tuple[pd.DataFrame, pd.DataFrame]:
+    """City of Lansing parcel values and tax bills for GM and the LGES plant."""
+    vals = pd.read_csv(DATA_DIR / "lansing_gm_area_parcels_values.csv", dtype={"parcel": str})
+    bills = pd.read_csv(DATA_DIR / "lansing_gm_area_parcels_tax_bills.csv", dtype={"parcel": str})
+    return vals, bills
+
+
+def load_irs_migration() -> pd.DataFrame:
+    return pd.read_csv(DATA_DIR / "irs_soi_migration_ingham_eaton_clinton_2022_2023.csv", dtype=str)
+
+
+def share(df: pd.DataFrame, mask_col: str, weight: str = "S000") -> float:
+    """Weighted share (percent) of rows where mask_col is True."""
+    tot = df[weight].sum()
+    return float(df.loc[df[mask_col], weight].sum() / tot * 100) if tot else np.nan

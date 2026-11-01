@@ -1,0 +1,11 @@
+indicator,claim,test_A,test_B,verdict
+W1,Most regional jobs are held by regional residents (>50%),61%,85%,Robust
+W1,Most MSU workers live in the region,70%,89%,Robust
+W1,Most GM workers live in the region,42%,79%,Not supported
+W1,Most State Government workers live in the region,49%,81%,Not supported
+W1,Ranking of local capture: MSU > Local Government > State Government > GM,MSU > Local Government > State Government > GM,MSU > Local Government > State Government > GM,Robust
+W1,"Fewer than 1 in 4 workers live in the city where they work (MSU, GM, State)",max 12%,max 22%,Robust
+W2,Less than half of Big 4 payroll leaks out of the region,16%,42%,Robust
+T3,GM's IFT abatements are small (<15%) relative to GM's Lansing property tax,9% of billed,9% (single source),Robust (one source)
+T4,GM + State workers generate over 10% of Lansing's income tax,21%,28%,Robust
+Supply,GM's Grand River plant sits alongside a comparable number of local parts-supplier jobs (≥50 per 100),90 per 100 (Ingham),Eaton suppressed,Robust (one county)
