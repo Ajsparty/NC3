@@ -191,3 +191,60 @@ def share(df: pd.DataFrame, mask_col: str, weight: str = "S000") -> float:
     """Weighted share (percent) of rows where mask_col is True."""
     tot = df[weight].sum()
     return float(df.loc[df[mask_col], weight].sum() / tot * 100) if tot else np.nan
+
+# ---------------------------------------------------------------------------
+# Loaders and helpers added for 03_benefit
+# ---------------------------------------------------------------------------
+
+def flag_anomalous_blocks(od: pd.DataFrame, min_jobs: int = 2000, max_local_pct: float = 25) -> set:
+    """Workplace blocks with many jobs but very few regional residents (same rule as 02_retention)."""
+    g = od.groupby("w_geocode")
+    jobs = g["S000"].sum()
+    local = od[od["h_in_region"]].groupby("w_geocode")["S000"].sum().reindex(jobs.index, fill_value=0)
+    pct = local / jobs * 100
+    return set(jobs[(jobs > min_jobs) & (pct < max_local_pct)].index)
+
+
+def load_acs_tracts() -> pd.DataFrame:
+    df = pd.read_csv(DATA_DIR / "acs_tract_2020_2024.csv", dtype={"geoid": str})
+    df["poverty_rate"] = df["below_poverty"] / df["poverty_universe"] * 100
+    df["owner_rate"] = df["owner_occupied"] / df["occupied_units"] * 100
+    df["asset_income_rate"] = df["hh_with_asset_income"] / df["households_c19054"] * 100
+    df["student_share"] = (df["enrolled_undergrad"] + df["enrolled_grad"]) / df["population"] * 100
+    df["unemployment_rate"] = df["unemployed"] / df["civilian_labor_force"] * 100
+    return df
+
+
+def load_acs_places() -> pd.DataFrame:
+    return pd.read_csv(DATA_DIR / "acs_places_2015_2019_2020_2024.csv")
+
+
+def tract_centroids() -> pd.DataFrame | None:
+    """Approximate tract centroids = mean of LODES crosswalk block points (2020 blocks).
+    Uses the raw crosswalk downloaded by load_retention_sources.py; returns None if absent."""
+    path = DATA_DIR / "lansing_data" / "raw" / "mi_xwalk.csv.gz"
+    if not path.exists():
+        return None
+    xw = pd.read_csv(path, dtype=str, usecols=["trct", "cty", "blklatdd", "blklondd"], compression="gzip")
+    xw = xw[xw["cty"].isin(TRI_FIPS)]
+    xw["lat"], xw["lon"] = xw["blklatdd"].astype(float), xw["blklondd"].astype(float)
+    return xw.groupby("trct")[["lat", "lon"]].mean().rename_axis("geoid").reset_index()
+
+
+def km_between(lat1, lon1, lat2, lon2):
+    """Approximate distance in km (equirectangular; fine at county scale)."""
+    return np.hypot((lat2 - lat1) * 111.0, (lon2 - lon1) * 111.0 * np.cos(np.radians(lat1)))
+
+
+def proportion_moe(num, num_moe, den, den_moe):
+    """Census formula for the MOE of a derived proportion (returns percentage points)."""
+    p = num / den
+    inside = num_moe**2 - p**2 * den_moe**2
+    inside = np.where(inside < 0, num_moe**2 + p**2 * den_moe**2, inside)
+    return np.sqrt(inside) / den * 100
+
+
+def diff_significant(x1, moe1, x2, moe2, z_crit=1.645):
+    """True when two ACS estimates differ at the 90% level (Census guidance)."""
+    se = np.sqrt((moe1 / 1.645) ** 2 + (moe2 / 1.645) ** 2)
+    return np.abs(x2 - x1) / se > z_crit

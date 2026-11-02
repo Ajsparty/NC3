@@ -29,6 +29,9 @@ state files or full ACFR PDFs. The files in this folder are filtered extracts.
 | `acs_commuting_flows_2016_2020_tri.csv` | Census ACS 2016–2020 county-to-county commuting flows (table1.xlsx) | Flows with residence or workplace in Ingham, Eaton, Clinton | 2016–2020 5-year | Survey-based workers by residence county × workplace county, with MOE. Second source for local-resident job capture (W1). |
 | `lodes_od_tri_workplace_2021_agg.csv.gz` | Census LODES8 OD 2021, main + aux, with block crosswalk | Workplace blocks in the 3 counties | 2021 | Jobs by workplace block × residence county / place / county subdivision, with workplace block lat/lon. Used for institution-level footprints and city-income-tax residency. Aggregated from the raw files; regenerate with `load_retention_sources.py`. |
 | `load_retention_sources.py` | — | — | — | Downloads the ACS commuting flows and LODES OD files and writes the two extracts above. |
+| `acs_tract_2020_2024.csv` | ACS 2020–2024 5-year (Census Reporter or Census API) | All 136 census tracts in Clinton, Eaton, Ingham | 2020–2024 | Population, median household income, poverty, tenure, median home value, asset-income households, college enrollment, unemployment — each with MOE. 2020 tract boundaries. |
+| `acs_places_2015_2019_2020_2024.csv` | ACS 5-year (Census API) | 3 counties, Lansing, East Lansing, Lansing–East Lansing MSA, Michigan | 2015–2019 and 2020–2024 | Same variables plus median household income by race/ethnicity. **The 2015–2019 MSA row includes Shiawassee County** (older OMB definition); do not use it for change over time. |
+| `load_benefit_sources.py` | — | — | — | Downloads the two ACS files above. Uses the official Census API when `CENSUS_API_KEY` is set, otherwise Census Reporter (no key; 2020–2024 only). |
 | `lansing_gm_parcel_inventory.csv` | City of Lansing BS&A Name search 'GENERAL MOTORS' | City of Lansing (Ingham + Eaton PA 425 area) | 2026 listing | All 34 GM records: parcel type (real / personal / IFT), active or inactive, plant site, and whether detail was collected. |
 | `lansing_gm_area_parcels_values.csv` | City of Lansing BS&A parcel records (manual export) | 8 parcels | tax years 2023–2026 | Assessed, SEV, taxable value. GM: Delta Township plant real property, 3 IFT-abated buildings (certificates expire 2027–2028), 3 personal-property accounts (plant equipment is 100% exempt). Plus LG Energy Solution battery plant (former GM JV, **not GM**; Renaissance Zone to 2040). These GM LLC parcels explain 89% of ACFR Table 7 'General Motors LLC' for 2025. |
 | `lansing_gm_area_parcels_tax_bills.csv` | City of Lansing BS&A tax history (screenshots) | Same 8 parcels | 2019–2026 summer/winter bills | Total tax billed per bill. Implied rates: ≈77–87 mills full rate; ≈41–44 mills on IFT parcels (half rate); ≈5–8 mills on the Renaissance Zone plant. Screenshot-to-parcel matching was checked with these implied rates. |
@@ -50,6 +53,15 @@ python Data_Files/load_retention_sources.py
 ```
 
 Raw downloads go to `Data_Files/lansing_data/raw/` and are not committed.
+
+For the resident-outcome sources (ACS tracts and places):
+
+```bash
+# PowerShell: $env:CENSUS_API_KEY="your_key"   (do not commit keys)
+python Data_Files/load_benefit_sources.py --skip-map
+```
+
+The official Census API now requires a free key (https://api.census.gov/data/key_signup.html). Without a key the script falls back to Census Reporter, which serves 2020–2024 but no longer serves 2015–2019.
 
 The main loader writes additional large extracts under `Data_Files/lansing_data/tables/`. Those files are regenerable and are not committed.
 
@@ -130,4 +142,3 @@ lower bound on local capture and ACS as the central estimate; report both.
   personal property is exempt under Michigan law.
 - Parcel values and tax bills were transcribed by hand from BS&A screenshots and PDF
   exports on 2026-10-27. Re-check against BS&A before publishing figures.
-
