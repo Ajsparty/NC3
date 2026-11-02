@@ -1,0 +1,10 @@
+indicator,claim,test_A,test_B,verdict
+C1,Lansing residents' median income is below the region's,"$54,382 ± 1,938","$72,550 ± 1,364",Robust
+C2,Lansing's poverty rate is above the region's,20.1%,13.5%,Robust
+C1,Lansing's real median income rose between 2015-19 and 2020-24,+6.4%,significant,Robust
+C5,"In Lansing, Black households' median income is below White non-Hispanic households'","$44,191 ± 4,793","$57,149 ± 2,119",Robust
+C6,Mismatch tracts exist (job centers whose residents are poorer than the region),"6 tracts (≥100 jobs/100 res, > region)","2 tracts (≥150, > region + 5 pp)",Robust
+C6b,Residents near State Capitol complex are poorer than the region (12%),small (1.5 km/3 tracts): 27% | large (3 km/5 tracts): 20%,with students: 24% | students in neighborhood: 11%,Robust
+C6b,Residents near GM Lansing Grand River are poorer than the region (12%),small (1.5 km/3 tracts): 14% | large (3 km/5 tracts): 19%,with students: 17% | students in neighborhood: 9%,Robust
+C6b,Residents near GM Lansing Delta Township are poorer than the region (12%),small (1.5 km/3 tracts): 4% | large (3 km/5 tracts): 7%,with students: 4% | students in neighborhood: 7%,Not supported
+C6b,Residents near MSU campus are poorer than the region (12%),small (1.5 km/3 tracts): 29% | large (3 km/5 tracts): 28%,with students: 44% | students in neighborhood: 29%,Inconclusive: student population
