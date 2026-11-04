@@ -1,0 +1,11 @@
+# NC3 analysis environment
+pandas>=2.0
+numpy>=1.24
+matplotlib>=3.7
+seaborn>=0.13
+plotly>=5.18
+requests>=2.31
+lxml>=5.0
+jupyter>=1.0
+jupyterlab>=4.0
+ipykernel>=6.25
