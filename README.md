@@ -17,6 +17,20 @@ The goal is to estimate how each institution affects local employment, the tax b
 
 A lightweight GIS layer that shows where economic pressure and institutional presence may overlap is a stretch goal if time allows.
 
+## Recent Partner Materials (November 2026)
+
+The following notebooks in `notebooks/` are ready for the Lansing Growth Fund meeting:
+
+- `NC3_Partner_Meeting_Snapshot.ipynb` — project overview, data inventory, key indicators, gaps, and discussion questions
+- `NC3_GM_Data_Correlation.ipynb` — GM employment, taxable value, and parcel trends
+- `NC3_Lansing_Findings_Correlation.ipynb` — combined GM + tri-county correlations and takeaways
+- `NC3_Tract_Mismatch_Snapshot.ipynb` — tract-level poverty and income rankings
+
+Supporting files:
+- `Data_Files/scorecard_metrics_draft.csv` — candidate scorecard metrics
+- `Data_Files/next_sources.md` — notes on QWI, PSEO, USASpending, HUD CHAS, Opportunity Atlas
+- `Team_Management_Files/20261104_NC3_PartnerMeetingNotes.md` — meeting notes skeleton
+
 ## Community Partner
 
 **Lansing Growth Fund** is a community-focused organization seeking to strengthen economic development, local investment, and community wealth creation in the Lansing region. The partner is interested in how capital, purchasing power, employment, taxation, and institutional investments flow through the local economy and how those flows affect community development and long-term economic resilience.
