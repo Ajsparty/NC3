@@ -19,6 +19,9 @@ dependencies:
   # Supports common public-data formats and future refresh workflows.
   - lxml=5.3
 
+  # Reads the ACS commuting-flow Excel file in Data_Files/load_retention_sources.py.
+  - openpyxl=3.1
+
   # Notebook environment.
   - jupyterlab=4.3
   - notebook=7.3

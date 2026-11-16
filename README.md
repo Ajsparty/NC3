@@ -4,6 +4,14 @@ Workspace for analysis of Lansing's economic ecosystem and community wealth with
 ## INSTALL INSTRUCTIONS
 Head to the INSTALL.md file to see the install instructions before reading forward
 
+## Figure Reproducibility
+
+Every project figure has a step-by-step instruction notebook in [`figures/`](figures/README.md). The figure index there lists each figure, the notebook that rebuilds it, its input data, and where it is used. To reproduce Figure 1 after installing the environment, run from the repository root:
+
+```bash
+jupyter nbconvert --to notebook --execute --inplace figures/fig01_big4_employment_range.ipynb
+```
+
 ## Project Overview
 
 The project produces a practical, annually refreshable scorecard for Lansing's four largest institutional actors (the "Big 4"):
@@ -56,6 +64,8 @@ This repository is the main organizational space for the NC3 analysis. Keep the 
 | `Project_Deliverables/` | Official submissions such as proposals, presentations, videos, and the final report |
 | `Individual_TeamMember_files/` | Individual working files and drafts |
 | `Data_Files/` | Datasets and other project data files |
+| `figures/` | Figure reproducibility notebooks and exported figures (see `figures/README.md`) |
+| `notebooks/` | Shared analysis and partner-meeting notebooks |
 
 ## File Naming Standards
 

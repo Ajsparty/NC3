@@ -1,6 +1,6 @@
 # NC3 Installation and Setup Guide
 
-This guide explains how an authorized project collaborator can create the NC3 Python environment, prepare the public data files, and run the baseline visualization notebook.
+This guide explains how an authorized project collaborator can create the NC3 Python environment, test the installation, prepare the data files, reproduce the project figures, and run the analysis notebooks.
 
 ## 1. System requirements
 
@@ -10,7 +10,7 @@ Install the following software before beginning:
 - [Miniconda](https://docs.conda.io/projects/miniconda/en/latest/) or Anaconda
 - Access to the private NC3 GitHub repository
 
-The project environment uses **Python 3.9.20**. The required Python packages are listed in `environment.yml`.
+The project environment uses **Python 3.9.20**. The required Python packages are listed in `environment.yml`, which is the authoritative environment definition. `requirements.txt` lists the same packages with minimum versions for collaborators who use `pip` instead of Conda; Conda users can ignore it.
 
 ## 2. Clone the repository
 
@@ -46,6 +46,8 @@ Activate the environment:
 conda activate nc3
 ```
 
+If `conda activate` fails in Windows PowerShell, see *Troubleshooting* (section 9) or use **Anaconda Prompt** instead.
+
 Optionally register it as a named Jupyter kernel:
 
 ```bash
@@ -64,64 +66,73 @@ The expected output is:
 Python 3.9.20
 ```
 
-## 4. Prepare the data files
+## 4. Test the installation
 
-The current repository uses manually downloaded public datasets. Follow `Data_Files/README.md` for source descriptions, update schedules, geographic coverage, and file-naming requirements.
-
-The baseline notebook currently requires these files:
-
-```text
-Data_Files/laus_lansing_msa_2019_latest.csv
-Data_Files/qcew_2024_a_focus.csv
-Data_Files/acs_2024_key_indicators.csv
-```
-
-Keep the filenames and folder locations unchanged unless the notebook is updated at the same time. The notebook checks for these files before beginning the analysis and reports any missing filenames.
-
-Additional datasets in `Data_Files/` support later scorecard development but are not required for the current baseline notebook.
-
-### Optional public-source refresh script
-
-The repository includes:
-
-```text
-Data_Files/load_lansing_sources.py
-```
-
-From the repository root, it can retrieve selected public QCEW, LODES, and ACS/Census Reporter data:
+With the `nc3` environment active, confirm that the core packages import correctly:
 
 ```bash
-python Data_Files/load_lansing_sources.py --year 2025 --qtr a
+python -c "import pandas, numpy, matplotlib, openpyxl; print('pandas', pandas.__version__, '| numpy', numpy.__version__, '| matplotlib', matplotlib.__version__)"
 ```
 
-The LODES downloads are relatively large. To refresh QCEW and ACS without downloading LODES, run:
+The command should print three version numbers (pandas 2.2.x, numpy 1.26.4, matplotlib 3.9.x) and no errors.
+
+Then run the Figure 1 demo from the repository root. It uses only data already committed in `Data_Files/` and needs no internet connection or API key:
 
 ```bash
-python Data_Files/load_lansing_sources.py --year 2025 --qtr a --skip-lodes
+jupyter nbconvert --to notebook --execute --inplace figures/fig01_big4_employment_range.ipynb
 ```
 
-Generated files are written under:
+A successful run takes under 10 seconds, writes `figures/fig01_big4_employment_range.png`, and ends with the message **"All values match the published figure."** If this works, the installation is complete.
 
-```text
-Data_Files/lansing_data/raw/
-Data_Files/lansing_data/tables/
+## 5. Data files
+
+All analysis inputs are small, curated CSV files committed in `Data_Files/`. `Data_Files/README.md` describes each file's source, geography, years, and caveats, and `Data_Files/source_catalog.csv` lists every source with its refresh schedule.
+
+### Which files each part of the project uses
+
+| Notebook | Input files in `Data_Files/` | Extra download needed? |
+| --- | --- | --- |
+| `figures/fig01_big4_employment_range.ipynb` | `qcew_2019_2025_a_focus.csv`, `lansing_acfr_fy2025_principal_employers.csv` | No |
+| `Individual_TeamMember_files/wangz153/01_footprint.ipynb` | `qcew_2019_2025_a_focus.csv`, `lansing_acfr_fy2025_principal_employers.csv` | No |
+| `Individual_TeamMember_files/wangz153/02_retention.ipynb` | `qcew_2019_2025_a_focus.csv`, `lodes_od_tri_workplace_2021_agg.csv.gz`, `acs_commuting_flows_2016_2020_tri.csv`, `lansing_acfr_fy2025_principal_taxpayers.csv`, `lansing_gm_area_parcels_values.csv`, `lansing_gm_area_parcels_tax_bills.csv`, `irs_soi_migration_ingham_eaton_clinton_2022_2023.csv` | No |
+| `Individual_TeamMember_files/wangz153/03_benefit.ipynb` | `acs_tract_2020_2024.csv`, `acs_places_2015_2019_2020_2024.csv`, `lodes_od_tri_workplace_2021_agg.csv.gz` | **Yes** — the LODES block crosswalk (below) |
+| `notebooks/baseline_visualizations.ipynb` | `laus_lansing_msa_2019_latest.csv`, `qcew_2024_a_focus.csv`, `acs_2024_key_indicators.csv` | No (optional Census request at the end) |
+
+Keep filenames and folder locations unchanged unless the notebook that reads them is updated at the same time.
+
+### Extra download for `03_benefit.ipynb`
+
+Notebook 03 locates each census tract using the Census LODES block crosswalk (`mi_xwalk.csv.gz`, about 4.5 MB). It is a public file but is not committed. Download it once into `Data_Files/lansing_data/raw/`.
+
+PowerShell (from the repository root):
+
+```powershell
+New-Item -ItemType Directory -Force Data_Files/lansing_data/raw | Out-Null
+Invoke-WebRequest https://lehd.ces.census.gov/data/lodes/LODES8/mi/mi_xwalk.csv.gz -OutFile Data_Files/lansing_data/raw/mi_xwalk.csv.gz
 ```
 
-These generated directories are excluded from version control. The script does **not** automatically overwrite the curated CSV files used by the baseline notebook. Before promoting a generated table into `Data_Files/`, compare its columns, geography, year, and definitions with the existing curated file, then update the notebook or canonical filename deliberately.
+macOS / Linux / Git Bash:
 
-The script currently automates only QCEW, LODES, and ACS/Census Reporter sources. LAUS, IRS, BEA, CBP, IPEDS, portal exports, and PDF-based sources still follow the source-specific procedures in `Data_Files/README.md`.
+```bash
+mkdir -p Data_Files/lansing_data/raw
+curl -L -o Data_Files/lansing_data/raw/mi_xwalk.csv.gz https://lehd.ces.census.gov/data/lodes/LODES8/mi/mi_xwalk.csv.gz
+```
 
-Do not commit:
+Running `python Data_Files/load_retention_sources.py` (section 8) also downloads this file.
 
-- API keys, passwords, tokens, or other credentials;
-- restricted or partner-confidential data;
-- full LODES state files;
-- full ACFR PDF files; or
-- regenerable large extracts stored under `Data_Files/lansing_data/tables/`.
+## 6. Reproduce the project figures
 
-The project `.gitignore` excludes designated credentials, local environments, and regenerable large data extracts. Always review `git status` before committing.
+Every figure used in presentations, videos, and reports has an instruction notebook in `figures/`. The figure index in [`figures/README.md`](figures/README.md) lists each figure, its notebook, its inputs, and where it is used.
 
-## 5. Start JupyterLab
+To reproduce a figure, either run it from the repository root:
+
+```bash
+jupyter nbconvert --to notebook --execute --inplace figures/fig01_big4_employment_range.ipynb
+```
+
+or open it in JupyterLab and choose **Kernel → Restart Kernel and Run All Cells**. Each figure notebook ends by comparing your numbers with the published figure.
+
+## 7. Run the analysis notebooks
 
 From the repository root, with the `nc3` environment active, run:
 
@@ -129,74 +140,86 @@ From the repository root, with the `nc3` environment active, run:
 jupyter lab
 ```
 
-Open:
+Select **Python (NC3)** as the kernel if it is not selected automatically, then use **Kernel → Restart Kernel and Run All Cells**.
 
-```text
-notebooks/baseline_visualizations.ipynb
-```
+| Notebook | What it does | Expected result |
+| --- | --- | --- |
+| `Individual_TeamMember_files/wangz153/01_footprint.ipynb` | Footprint: jobs, share of regional jobs, relative pay, and trends for the Big 4 | Range chart and trend chart; CSV files written to `Individual_TeamMember_files/wangz153/outputs/footprint_*.csv` |
+| `Individual_TeamMember_files/wangz153/02_retention.ipynb` | Retention: where workers live, payroll leaving the region, GM property tax, city income tax | Capture and wage charts; `outputs/retention_*.csv` |
+| `Individual_TeamMember_files/wangz153/03_benefit.ipynb` | Benefit: resident income, poverty, and tracts where job centers and poverty overlap | Tract and site charts; `outputs/benefit_*.csv` (requires the crosswalk in section 5) |
+| `notebooks/baseline_visualizations.ipynb` | Baseline regional indicators: unemployment, employment by ownership, industry stand-ins, median income | Four baseline charts; the final Census API section is optional and needs internet |
 
-In Jupyter, select **Python (NC3)** as the kernel if it is not selected automatically. Then use:
+The three `wangz153` notebooks import `nc3_helpers.py` from the same folder, so open them from that folder (JupyterLab does this automatically). Each of them takes under a minute to run.
 
-```text
-Kernel -> Restart Kernel and Run All Cells
-```
+## 8. Refresh the data from the original sources (optional)
 
-Save the notebook after all cells finish successfully.
+The committed CSV files are enough to run everything above. These scripts re-download the public data for an annual update. They need an internet connection. Run them from the repository root.
 
-## 6. Expected notebook results
+| Script | Downloads | Command |
+| --- | --- | --- |
+| `Data_Files/load_lansing_sources.py` | QCEW (BLS), LODES, ACS key indicators | `python Data_Files/load_lansing_sources.py --year 2025 --qtr a --skip-lodes` |
+| `Data_Files/load_retention_sources.py` | ACS county commuting flows, LODES origin–destination files and block crosswalk | `python Data_Files/load_retention_sources.py` |
+| `Data_Files/load_benefit_sources.py` | ACS tract and place indicators | `python Data_Files/load_benefit_sources.py --skip-map` |
 
-A successful run should:
+Notes:
 
-1. identify the repository and `Data_Files` directories;
-2. confirm that the three required CSV files exist;
-3. display a Lansing-East Lansing MSA unemployment-rate trend;
-4. compare Lansing MSA employment by ownership category;
-5. visualize selected industry stand-ins;
-6. compare median household income across the available geographies; and
-7. optionally retrieve Lansing population and household-income values from the Census API.
+- `load_lansing_sources.py` downloads one QCEW year per run; repeat with `--year 2024`, `--year 2023`, and so on. Drop `--skip-lodes` to also download LODES (large files).
+- `load_retention_sources.py --skip-lodes` downloads only the ACS commuting flows.
+- `load_benefit_sources.py` uses the official Census API when the `CENSUS_API_KEY` environment variable is set, and falls back to Census Reporter otherwise (Census Reporter serves 2020–2024 only). A free key is available at https://api.census.gov/data/key_signup.html. Set it **only as an environment variable** for the current terminal session — never in code, notebooks, or committed files:
 
-The final API section is optional and requires an internet connection. The current request does not require an API key. If the request fails, the local-data sections should still remain usable.
+  ```powershell
+  $env:CENSUS_API_KEY="your_key"
+  ```
 
-## 7. Updating an existing environment
+  ```bash
+  export CENSUS_API_KEY="your_key"
+  ```
 
-After `environment.yml` changes, update the environment with:
+Downloads are written under `Data_Files/lansing_data/raw/` and `Data_Files/lansing_data/tables/`, which are excluded from version control. The scripts do **not** overwrite the curated CSV files in `Data_Files/`. Before replacing a curated file, compare its columns, geography, year, and definitions with the existing file, then update the notebooks and `Data_Files/README.md` deliberately.
 
-```bash
-conda activate nc3
-conda env update --file environment.yml --prune
-```
+Sources without a download script (LAUS, IRS, BEA, CBP, IPEDS, City of Lansing ACFR tables, BS&A parcel records) follow the source-specific procedures in `Data_Files/README.md`.
 
-## 8. Troubleshooting
+Do not commit:
+
+- API keys, passwords, tokens, or other credentials;
+- restricted or partner-confidential data;
+- full LODES state files;
+- full ACFR PDF files; or
+- regenerable large extracts stored under `Data_Files/lansing_data/`.
+
+Always review `git status` before committing.
+
+## 9. Troubleshooting
 
 ### Conda cannot find `environment.yml`
 
-Confirm that the terminal is in the repository root:
+Confirm that the terminal is in the repository root (`pwd`, or `Get-Location` in PowerShell). The directory should contain `README.md`, `environment.yml`, `INSTALL.md`, `Data_Files/`, `figures/`, and `notebooks/`.
+
+### `conda activate nc3` fails
+
+- **"Could not find conda environment: nc3"** — the environment has not been created yet. Run `conda env create --file environment.yml` first.
+- **`conda activate` does nothing or is not recognized in PowerShell** — run `conda init powershell` once, close and reopen PowerShell, and try again. Alternatively, use **Anaconda Prompt**.
+
+### `jupyter` errors that mention another Python installation
+
+If an error message shows a path outside the `nc3` environment (for example `D:\python\...` or a `mistune` / `nbconvert` import error), the terminal is using a different Jupyter installation. Activate the environment and check which Jupyter is used:
+
+```powershell
+conda activate nc3
+where.exe jupyter
+```
 
 ```bash
-pwd
+which jupyter
 ```
 
-In Windows PowerShell, you can also run:
+The first result should be inside the `nc3` environment folder. Restart the terminal after activating if necessary.
 
-```powershell
-Get-Location
-```
+### A notebook reports missing data files
 
-The directory should contain `README.md`, `environment.yml`, `INSTALL.md`, `Data_Files/`, and `notebooks/`.
-
-### The notebook reports missing data files
-
-Check the data directory and exact filenames:
-
-```powershell
-Get-ChildItem Data_Files
-```
-
-The filenames are case-sensitive on some operating systems. Confirm that the required CSV files are located directly inside `Data_Files/`.
+Check the exact filenames in `Data_Files/` (`Get-ChildItem Data_Files` in PowerShell). Filenames are case-sensitive on some operating systems. For `03_benefit.ipynb`, also check that `Data_Files/lansing_data/raw/mi_xwalk.csv.gz` exists (section 5).
 
 ### Jupyter uses the wrong Python environment
-
-Activate the NC3 environment and register the kernel again:
 
 ```bash
 conda activate nc3
@@ -210,41 +233,49 @@ Restart JupyterLab and select **Python (NC3)**.
 Update the environment from the repository definition:
 
 ```bash
+conda activate nc3
 conda env update --file environment.yml --prune
 ```
 
 Avoid installing packages into the base environment because doing so makes the project harder to reproduce.
 
-### The optional Census request fails
+### The optional Census request in the baseline notebook fails
 
-Confirm that the computer has internet access and try again later. The baseline analysis is designed so that the local CSV sections can still run when the live request is unavailable.
+Confirm that the computer has internet access and try again later. The local-data sections of the notebook still run without it.
 
-## 9. Development workflow
+## 10. Development workflow
 
-Before making a change, update `main` and create a focused branch:
+Changes are made on a branch and merged into `main` through a pull request.
 
-```bash
-git switch main
-git pull --ff-only origin main
-git switch -c feature/short-description
-```
+1. Update `main` and create a focused branch:
 
-Before committing, inspect the proposed changes:
+   ```bash
+   git switch main
+   git pull --ff-only origin main
+   git switch -c feature/short-description
+   ```
 
-```bash
-git status
-git diff
-```
+2. Make the change, then inspect it before committing:
 
-Commit only the intended code, documentation, and approved data extracts. Push the branch and open a pull request for team review.
+   ```bash
+   git status
+   git diff
+   ```
 
-## 10. Current reproducibility limitations
+   Commit only the intended code, documentation, and approved data extracts, with a short, descriptive commit message.
 
-The repository provides partial automation through `Data_Files/load_lansing_sources.py`, but it does not yet refresh every source or automatically convert generated tables into all curated notebook inputs. An annual update therefore combines:
+3. Push the branch and open a pull request on GitHub:
 
-1. automated retrieval for supported QCEW, LODES, and ACS sources;
-2. manual retrieval for the remaining public sources;
-3. validation of schemas, geography, years, and definitions; and
-4. deliberate replacement of curated analysis files.
+   ```bash
+   git push -u origin feature/short-description
+   ```
 
-Record the retrieval date and source release for every annual update. Future work should automate additional stable sources while retaining a documented manual process for portal exports and PDF-based sources.
+4. After review, merge the pull request into `main`, then update your local copy with `git switch main` and `git pull --ff-only origin main`.
+
+## 11. Current reproducibility limitations
+
+- The download scripts automate QCEW, LODES, and ACS. LAUS, IRS, BEA, CBP, IPEDS, the City of Lansing ACFR tables, and BS&A parcel records are retrieved manually, as described in `Data_Files/README.md`.
+- The scripts write fresh downloads alongside, not over, the curated CSV files. An annual update therefore combines automated retrieval, manual retrieval, validation of schemas, geography, years, and definitions, and deliberate replacement of curated files.
+- `03_benefit.ipynb` needs one public file that is not committed (the LODES crosswalk, section 5).
+
+Record the retrieval date and source release for every annual update.

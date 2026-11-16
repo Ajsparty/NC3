@@ -1,0 +1,5 @@
+institution,year,low,high,low_source,high_source
+MSU,2025,10253.0,17351.0,ACFR Table 15 (LEAP),QCEW Ingham state gov (2/10) - state public admin (2/92)
+GM,2025,4549.0,6383.0,ACFR Table 15 (LEAP),QCEW Eaton 3361 + Ingham (336 - 3363)
+State Government,2025,13880.0,16416.0,ACFR Table 15 (LEAP),"QCEW state public admin (2/92), Eaton 2025 estimated"
+Local Government,2025,6298.0,18910.0,QCEW local public administration (3/92),QCEW all local government (3/10)
