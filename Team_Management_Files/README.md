@@ -1,8 +1,10 @@
 # Team Management Files
 
+**Repository:** https://github.com/Ajsparty/NC3
+
 Use this folder for team operations documents, including:
 
-- Team Charter
+- Team Charter (see `Team_Charter.md`)
 - Meeting notes
 - Weekly 3x3 reports
 - Signed agreements
