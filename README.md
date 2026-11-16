@@ -1,5 +1,7 @@
 # NC3 — Lansing Economic Ecosystem and Community Wealth Analysis
 
+**Repository:** https://github.com/Ajsparty/NC3
+
 Workspace for analysis of Lansing's economic ecosystem and community wealth with the Lansing Growth Fund. This repository holds project documents, deliverables, working files, and data used to estimate how Lansing's largest institutional actors affect local jobs, the tax base, and community wealth retention.
 ## INSTALL INSTRUCTIONS
 Head to the INSTALL.md file to see the install instructions before reading forward.
