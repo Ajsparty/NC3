@@ -15,6 +15,12 @@ This folder contains Jupyter notebooks for exploratory analysis and visualizatio
 
 `baseline_visualizations.ipynb` provides a clean starting point for testing charts and scorecard-style outputs using the public data extracts in `Data_Files/`.
 
+## Figure export
+
+`baseline_visualizations.ipynb` and the partner notebooks show charts inside the notebook. They do not write image files.
+
+To export every project figure, including the charts in this folder, run `figure_instructions/reproduce_figures.ipynb`. The steps are in `figure_instructions/README.md`.
+
 ## Setup
 
 From the repository root:

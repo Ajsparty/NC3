@@ -1,0 +1,6 @@
+measure,Median HH Income,Poverty Rate (%),Owner-Occupied (%),State Gov Share (%),NAICS 336 Share (%)
+Median HH Income,1.0,-0.86,1.0,-0.99,0.1
+Poverty Rate (%),-0.86,1.0,-0.87,0.92,-0.59
+Owner-Occupied (%),1.0,-0.87,1.0,-0.99,0.13
+State Gov Share (%),-0.99,0.92,-0.99,1.0,-0.23
+NAICS 336 Share (%),0.1,-0.59,0.13,-0.23,1.0

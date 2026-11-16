@@ -1,0 +1,22 @@
+file,description,used_in
+figures/01_laus_unemployment_rate.png,"Monthly not-seasonally-adjusted unemployment rate, Lansing-East Lansing MSA.",notebooks/baseline_visualizations.ipynb section 1; INSTALL.md demo chart 1.
+figures/02_qcew_msa_ownership.png,2024 average employment by ownership for the Lansing-East Lansing MSA.,notebooks/baseline_visualizations.ipynb section 2; INSTALL.md demo chart 2.
+figures/03_industry_standins.png,"2024 MSA employment for all-industry, transportation equipment, education, and public administration stand-ins.",notebooks/baseline_visualizations.ipynb section 3; INSTALL.md demo chart 3.
+figures/04_median_income_by_geography.png,"ACS 2024 5-year median household income for the counties, cities, and MSA in the extract.",notebooks/baseline_visualizations.ipynb section 4; INSTALL.md demo chart 4.
+figures/05_laus_annual_average.png,Annual mean unemployment rate. 2026 is the mean of the months present in the extract.,notebooks/NC3_Partner_Meeting_Snapshot.ipynb labor-market section.
+figures/06_tricounty_ownership.png,"2024 tri-county average employment by ownership, with each group's share of the four groups.",notebooks/NC3_Partner_Meeting_Snapshot.ipynb employment section.
+figures/07_county_median_income.png,"ACS 2024 5-year median household income for Clinton, Eaton, and Ingham counties.",notebooks/NC3_Partner_Meeting_Snapshot.ipynb and notebooks/NC3_Lansing_Findings_Correlation.ipynb.
+figures/08_gm_regional_employment.png,"GM employees in the Greater Lansing Region, 2016 and 2025, from ACFR Table 15.",notebooks/NC3_GM_Data_Correlation.ipynb section 1.
+figures/09_gm_combined_taxable_value.png,Combined taxable assessed value of GM entities on ACFR Table 7. Ultium / LG Energy Solution is excluded.,notebooks/NC3_GM_Data_Correlation.ipynb section 2 and notebooks/NC3_Lansing_Findings_Correlation.ipynb.
+figures/10_delta_assembly_taxable_value.png,"Taxable value of the core real-property parcel at the Lansing Delta Township Assembly, 2023–2026.",notebooks/NC3_GM_Data_Correlation.ipynb section 3 and notebooks/NC3_Lansing_Findings_Correlation.ipynb section 6.
+figures/11_city_county_msa_income.png,"Median household income for Lansing, East Lansing, Ingham County, and the MSA.",notebooks/NC3_Lansing_Findings_Correlation.ipynb section 3.
+figures/12_county_correlation.png,"Pearson correlations among income, poverty, homeownership, state-government share, and NAICS 336 share. n = 3.",notebooks/NC3_Lansing_Findings_Correlation.ipynb section 4.
+figures/13_state_gov_share_vs_income.png,County state-government employment share against median household income.,notebooks/NC3_Lansing_Findings_Correlation.ipynb section 5.
+figures/14_naics336_share_vs_poverty.png,County transportation-equipment employment share against the ACS poverty rate.,notebooks/NC3_Lansing_Findings_Correlation.ipynb section 5.
+figures/15_top_tracts_by_poverty.png,Ten tri-county tracts with the highest ACS 2020–2024 poverty rates.,notebooks/NC3_Tract_Mismatch_Snapshot.ipynb.
+figures/16_lowest_income_tracts.png,Ten tri-county tracts with the lowest ACS 2020–2024 median household income.,notebooks/NC3_Tract_Mismatch_Snapshot.ipynb.
+figures/17_big4_employment_range.png,"Low and high public estimates of 2025 employment for MSU, GM, state government, and local government.",Individual_TeamMember_files/wangz153/01_footprint.ipynb.
+figures/18_employment_index_2019.png,QCEW employment indexed to 2019 for the region and for four Big 4 series.,Individual_TeamMember_files/wangz153/01_footprint.ipynb section 4.
+figures/19_local_resident_capture.png,"Share of each institution's workers who live in Clinton, Eaton, or Ingham. Bar runs from the LODES estimate to the ACS-calibrated estimate.",Individual_TeamMember_files/wangz153/02_retention.ipynb.
+figures/20_poverty_near_sites.png,"Poverty rate of residents near each Big 4 site, compared with non-student tracts in the region.",Individual_TeamMember_files/wangz153/03_benefit.ipynb.
+figures/21_jobs_vs_poverty.png,Census tracts by jobs per 100 residents and poverty rate. Highlighted tracts are near a Big 4 site.,Individual_TeamMember_files/wangz153/03_benefit.ipynb.

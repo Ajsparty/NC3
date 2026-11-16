@@ -2,7 +2,17 @@
 
 Workspace for analysis of Lansing's economic ecosystem and community wealth with the Lansing Growth Fund. This repository holds project documents, deliverables, working files, and data used to estimate how Lansing's largest institutional actors affect local jobs, the tax base, and community wealth retention.
 ## INSTALL INSTRUCTIONS
-Head to the INSTALL.md file to see the install instructions before reading forward
+Head to the INSTALL.md file to see the install instructions before reading forward.
+
+## Figure instructions
+
+Instructions for every project figure are in `figure_instructions/`.
+
+1. Finish the install in `INSTALL.md`.
+2. Open `figure_instructions/README.md` for the run steps.
+3. Run `figure_instructions/reproduce_figures.ipynb` with **Restart Kernel and Run All Cells**.
+
+The notebook writes one PNG per figure to `figure_instructions/figures/` and writes the plotted tables to `figure_instructions/intermediate/`. The first markdown cell of the notebook lists each figure and the notebook, demo, or report section that uses it.
 
 ## Figure Reproducibility
 
@@ -65,6 +75,7 @@ This repository is the main organizational space for the NC3 analysis. Keep the 
 | `Individual_TeamMember_files/` | Individual working files and drafts |
 | `Data_Files/` | Datasets and other project data files |
 | `figures/` | Figure reproducibility notebooks and exported figures (see `figures/README.md`) |
+| `figure_instructions/` | Notebook that rebuilds and exports every project figure |
 | `notebooks/` | Shared analysis and partner-meeting notebooks |
 
 ## File Naming Standards
