@@ -1,3 +1,0 @@
-year,unitid,inst_name,city,inst_control,institution_level,sector,year_deleted,longitude,latitude,endpoint,rev_endowment_income,rev_endowment_additions,sch_grants_institutional,endowment_beg,endowment_end,own_endowment_assets,depr_capital_assets,assets,liabilities,assets_net,invest_capital_assets,intangible_assets_net,capital_assets_other,total_revenues_additions,total_expenses_deductions,parent_unitid,est_fte,rep_fte,calc_fte
-2023,171100,Michigan State University,East Lansing,1.0,4.0,1.0,-2.0,-84.476111,42.73212,directory,,,,,,,,,,,,,,,,,,,
-2022,171100,,,,,,,,,finance,,39157484.0,210447216.0,4375011840.0,4580073984.0,1.0,2780388864.0,8534624768.0,3334658304.0,,1595589632.0,44169160.0,367581.0,3124532736.0,3027225344.0,-2.0,42858.0,45990.0,46500.0
