@@ -12,7 +12,7 @@ Install the following software before beginning:
 
 The project environment uses **Python 3.9.20**. The required Python packages are listed in `environment.yml`, which is the authoritative environment definition. `requirements.txt` lists the same packages with minimum versions for collaborators who use `pip` instead of Conda; Conda users can ignore it.
 
-## 2. Clone the repository
+## 2. Clone the repository and load data
 
 Open PowerShell, Git Bash, Anaconda Prompt, or another terminal and run:
 
@@ -31,6 +31,9 @@ git pull --ff-only origin main
 ```
 
 Do not use force-pull or hard-reset commands when the working tree contains uncommitted work.
+
+## How to get data IMPORTANT
+After cloning the repo take the Data files folder and drag it into the NC3 folder.
 
 ## 3. Create the Conda environment
 
