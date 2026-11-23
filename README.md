@@ -6,6 +6,24 @@ Workspace for analysis of Lansing's economic ecosystem and community wealth with
 ## INSTALL INSTRUCTIONS
 Head to the INSTALL.md file to see the install instructions before reading forward.
 
+## Testing and demo instructions
+
+### Quick demo on GitHub
+
+Open the [November findings report](Project_Deliverables/NC3_Findings_by_Metric.md), then use these charts to walk through the results. This demo requires no installation.
+
+| Chart | Expected result |
+| --- | --- |
+| [Big 4 employment range](figure_instructions/figures/17_big4_employment_range.png) | GM's estimated 2025 employment was 4,549–6,383 jobs. |
+| [Local resident capture](figure_instructions/figures/19_local_resident_capture.png) | MSU ranked highest under both methods, with 70%–89% of workers estimated to live in the three-county region. |
+| [Poverty near institutional sites](figure_instructions/figures/20_poverty_near_sites.png) | Poverty was about 24% near the State Capitol and 17% near GM Grand River, compared with 12% across regional tracts outside student-dominated areas. |
+
+### Test the full figure export locally
+
+1. Follow [INSTALL.md](INSTALL.md) and place the separately distributed `Data_Files/` folder next to `README.md`.
+2. Open `figure_instructions/reproduce_figures.ipynb` in JupyterLab with the NC3 Python environment. Leave `RUN_LIVE_CENSUS = False` and select **Restart Kernel and Run All Cells**.
+3. Confirm that the final cell reports **21 exported figures**. Check the PNGs in `figure_instructions/figures/` and compare the generated CSVs in `figure_instructions/intermediate/` with the expected results above.
+
 ## Figure instructions
 
 Instructions for every project figure are in `figure_instructions/`.
