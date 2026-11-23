@@ -11,6 +11,7 @@ An annually refreshable scorecard of how Lansing's four largest institutions —
    1. [notebooks/01_footprint.ipynb](notebooks/01_footprint.ipynb) — how big is each institution?
    2. [notebooks/02_retention.ipynb](notebooks/02_retention.ipynb) — how much of its activity stays local?
    3. [notebooks/03_benefit.ipynb](notebooks/03_benefit.ipynb) — what do residents nearby actually have?
+   - **Regional and partner-meeting context:** [baseline_visualizations.ipynb](notebooks/baseline_visualizations.ipynb) (labor market, employment by ownership, income) and four notebooks prepared for the November 2026 partner meeting — GM footprint, county comparison, tract rankings, and a meeting snapshot. They are listed in [notebooks/README.md](notebooks/README.md) and can be run in any order.
 3. **Reproduce every project figure** — run [figure_instructions/reproduce_figures.ipynb](figure_instructions/reproduce_figures.ipynb). Steps and the figure index are in [figure_instructions/README.md](figure_instructions/README.md).
 4. **Read the results** — the report draft and presentations are in [Project_Deliverables/](Project_Deliverables/README.md).
 
