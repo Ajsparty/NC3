@@ -1,58 +1,40 @@
 # Figure instructions
 
-This folder holds the instructions for every figure in the NC3 project.
-The instruction file is `reproduce_figures.ipynb`.
+[reproduce_figures.ipynb](reproduce_figures.ipynb) is the instruction file for every figure in the NC3 project. It reads the data package and the stored analysis results, rebuilds each figure, and exports it as a PNG.
 
-Install the project first. Follow `../INSTALL.md` through the environment and data sections.
-The data files this notebook reads are already in `Data_Files/`.
+Back to the [README](../README.md).
+
+## Before you run it
+
+Complete [INSTALL.md](../INSTALL.md) sections 1–4: environment created and active, data package copied into `Data_Files/`.
 
 ## Run
 
-From the repository root, with the `nc3` environment active:
+From the repository root, with `nc3` active:
 
 ```bash
-jupyter lab
+jupyter nbconvert --to notebook --execute --inplace figure_instructions/reproduce_figures.ipynb
 ```
 
-Open `figure_instructions/reproduce_figures.ipynb`.
-Select the **Python (NC3)** kernel.
-Use **Kernel → Restart Kernel and Run All Cells**.
+or start `jupyter lab`, open this notebook, and choose **Kernel → Restart Kernel and Run All Cells**.
 
-The notebook finds the repository root by walking upward until it sees `Data_Files/` and `INSTALL.md`.
-You can start Jupyter from the repository root or from this folder.
-
-A normal run finishes in about a minute. It does not download data.
+A run takes about a minute, needs no internet, and ends with **"Figure export check passed."**
 
 ## What the run writes
 
-| Path | What it is |
+| Path | Contents |
 | --- | --- |
-| `figures/` | One PNG per figure. Files are named `01_` through `21_`. |
-| `intermediate/` | The table plotted in each figure, plus `figure_index.csv`. |
+| [figures/](figures/) | One PNG per figure, `01_` to `21_` |
+| [intermediate/](intermediate/) | The table each figure plots, plus `figure_index.csv` (every figure, what it shows, where it is used) |
 
-The last cell prints the file list and checks that 21 figures were written.
+## Which figures come from where
 
-Figure 22 is the optional live Census API chart from `notebooks/baseline_visualizations.ipynb`.
-It stays off unless you set `RUN_LIVE_CENSUS = True` in the setup cell. That call needs internet and no API key.
+| Figures | Source notebook | Role |
+| --- | --- | --- |
+| 17–21 | [01_footprint](../notebooks/01_footprint.ipynb), [02_retention](../notebooks/02_retention.ipynb), [03_benefit](../notebooks/03_benefit.ipynb) | Main analysis figures, used in the report and presentations |
+| 01–04 | [baseline_visualizations](../notebooks/baseline_visualizations.ipynb) | Baseline regional context |
+| 05–16 | Partner-meeting notebooks in [notebooks/](../notebooks/README.md) | Charts shown at the November 2026 partner meeting |
 
-## Where the figures are used
+Figures 17–21 read the analysis results stored in [notebooks/outputs/](../notebooks/outputs/). To rebuild those results first, run notebooks 01, 02, and 03 in order ([INSTALL.md](../INSTALL.md) section 6), then re-run this notebook.
 
-The notebook's first section is the index. In short:
-
-- Figures 01–04 are the four charts in the `INSTALL.md` demo and in `notebooks/baseline_visualizations.ipynb`.
-- Figures 05–16 are the partner-meeting charts in `notebooks/`. Those notebooks display Plotly charts and do not save image files. This notebook exports the same series as PNG.
-- Figures 17–21 are the scorecard charts in `Individual_TeamMember_files/wangz153/`. They read the CSVs already stored in `wangz153/outputs/`.
-
-## If a scorecard CSV is missing
-
-Skip this unless `reproduce_figures.ipynb` stops and names a file under `wangz153/outputs/`.
-
-Those CSVs are the intermediate results of the scorecard notebooks. To rebuild them, run all cells in this order:
-
-1. `Individual_TeamMember_files/wangz153/01_footprint.ipynb`
-2. `Individual_TeamMember_files/wangz153/02_retention.ipynb`
-3. `Individual_TeamMember_files/wangz153/03_benefit.ipynb`
-
-Then re-run `reproduce_figures.ipynb`.
-Notebook 02 reads `Data_Files/lodes_od_tri_workplace_2021_agg.csv.gz`, which is already in the repository.
-That rebuild takes several minutes. A normal review uses the stored CSVs and skips it.
+Figure 22 is an optional live Census API chart. It is off by default (`RUN_LIVE_CENSUS = False` in the setup cell) and needs internet and a Census API key in the `CENSUS_API_KEY` environment variable ([INSTALL.md](../INSTALL.md) section 8).

@@ -1,41 +1,27 @@
 # Notebooks
 
-This folder contains Jupyter notebooks for exploratory analysis and visualization for the NC3 Lansing Economic Ecosystem and Community Wealth Analysis project.
+Back to the [README](../README.md). Set up the environment and data first with [INSTALL.md](../INSTALL.md).
 
-## Partner Meeting Materials (November 2026)
+## Main analysis — run in this order
+
+| Order | Notebook | Question | Results written to `outputs/` |
+| --- | --- | --- | --- |
+| 1 | [01_footprint.ipynb](01_footprint.ipynb) | How big is each Big 4 institution in the regional economy? | `footprint_*.csv` |
+| 2 | [02_retention.ipynb](02_retention.ipynb) | How much of its wages, purchasing, and taxes stays local? | `retention_*.csv` |
+| 3 | [03_benefit.ipynb](03_benefit.ipynb) | What do residents nearby actually have, and where is the mismatch? | `benefit_*.csv` |
+
+All three import [nc3_helpers.py](nc3_helpers.py), which holds the shared loading, suppression handling, and geography definitions. [outputs/](outputs/) stores their results so the figures can be rebuilt without re-running the analysis. Notebook 03 needs one extra public file; see [INSTALL.md](../INSTALL.md) section 4.
+
+## Supporting notebooks
+
+These are not part of the main sequence. Their charts are exported, together with all other project figures, by [figure_instructions/reproduce_figures.ipynb](../figure_instructions/reproduce_figures.ipynb).
 
 | Notebook | Purpose |
-|----------|---------|
-| `NC3_Partner_Meeting_Snapshot.ipynb` | Concise, presentation-ready overview of project scope, data inventory, labor market, employment footprint, resident outcomes, Big 4 context, data gaps, and discussion questions for the Lansing Growth Fund meeting. |
-| `NC3_GM_Data_Correlation.ipynb` | Focused correlation of GM regional employment (ACFR), City of Lansing taxable value, and parcel-level taxable value trends (Delta Township Assembly). Ultium/LG Energy Solution tracked separately. |
-| `NC3_Lansing_Findings_Correlation.ipynb` | Combines GM footprint with tri-county ACS/QCEW indicators; descriptive cross-county correlations, city–county contrasts, and takeaways for partner discussion. |
-| `NC3_Tract_Mismatch_Snapshot.ipynb` | Tract-level ACS indicators ranked by poverty and median income; starting point for neighborhood mismatch analysis near institutional sites. |
+| --- | --- |
+| [baseline_visualizations.ipynb](baseline_visualizations.ipynb) | First baseline charts: unemployment, employment by ownership, industry stand-ins, median income. The last section is an optional Census API example that needs a key. |
+| [NC3_Partner_Meeting_Snapshot.ipynb](NC3_Partner_Meeting_Snapshot.ipynb) | Overview prepared for the November 2026 partner meeting |
+| [NC3_GM_Data_Correlation.ipynb](NC3_GM_Data_Correlation.ipynb) | GM employment, taxable value, and parcel trends for the partner meeting |
+| [NC3_Lansing_Findings_Correlation.ipynb](NC3_Lansing_Findings_Correlation.ipynb) | GM and tri-county comparison for the partner meeting (three counties only, so correlations are descriptive) |
+| [NC3_Tract_Mismatch_Snapshot.ipynb](NC3_Tract_Mismatch_Snapshot.ipynb) | Tract rankings by poverty and income, an early version of the mismatch analysis in notebook 03 |
 
-## Baseline Visualizations
-
-`baseline_visualizations.ipynb` provides a clean starting point for testing charts and scorecard-style outputs using the public data extracts in `Data_Files/`.
-
-## Figure export
-
-`baseline_visualizations.ipynb` and the partner notebooks show charts inside the notebook. They do not write image files.
-
-To export every project figure, including the charts in this folder, run `figure_instructions/reproduce_figures.ipynb`. The steps are in `figure_instructions/README.md`.
-
-## Setup
-
-From the repository root:
-
-```bash
-pip install -r requirements.txt
-# or
-conda env create -f environment.yml
-conda activate nc3
-```
-
-Then:
-
-```bash
-jupyter notebook notebooks/NC3_Partner_Meeting_Snapshot.ipynb
-```
-
-Paths in the notebooks assume the repository root as the working directory (or adjust any `DATA_DIR` variable). The partner notebooks use pandas and Plotly.
+The partner-meeting notebooks include some summary values typed into the notebook for the meeting. The analysis notebooks and the figure notebook read every value from the data package.

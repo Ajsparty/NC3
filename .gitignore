@@ -232,3 +232,10 @@ Data_Files/lansing_data/raw/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project data: distributed separately as Data_Files.zip (see INSTALL.md), not tracked in git.
+# Code and documentation in Data_Files/ stay tracked.
+Data_Files/*.csv
+Data_Files/*.csv.gz
+!Data_Files/source_catalog.csv
+!Data_Files/scorecard_metrics_draft.csv
