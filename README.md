@@ -15,6 +15,24 @@ An annually refreshable scorecard of how Lansing's four largest institutions —
 3. **Reproduce every project figure** — run [figure_instructions/reproduce_figures.ipynb](figure_instructions/reproduce_figures.ipynb). Steps and the figure index are in [figure_instructions/README.md](figure_instructions/README.md).
 4. **Read the results** — the report draft and presentations are in [Project_Deliverables/](Project_Deliverables/README.md).
 
+## Testing and demo instructions
+
+### Quick demo on GitHub
+
+Open the [November findings report](Project_Deliverables/NC3_Findings_by_Metric.md), then use these charts to walk through the results. This demo requires no installation.
+
+| Chart | Expected result |
+| --- | --- |
+| [Big 4 employment range](figure_instructions/figures/17_big4_employment_range.png) | GM's estimated 2025 employment was 4,549–6,383 jobs. |
+| [Local resident capture](figure_instructions/figures/19_local_resident_capture.png) | MSU ranked highest under both methods, with 70%–89% of workers estimated to live in the three-county region. |
+| [Poverty near institutional sites](figure_instructions/figures/20_poverty_near_sites.png) | Poverty was about 24% near the State Capitol and 17% near GM Grand River, compared with 12% across regional tracts outside student-dominated areas. |
+
+### Test the full figure export locally
+
+1. Follow [INSTALL.md](INSTALL.md) sections 1–4: create the `nc3` environment and copy the data files from the separately distributed data package into `Data_Files/`.
+2. Open [figure_instructions/reproduce_figures.ipynb](figure_instructions/reproduce_figures.ipynb) in JupyterLab with the `nc3` environment. Leave `RUN_LIVE_CENSUS = False` and select **Restart Kernel and Run All Cells**.
+3. Confirm that the final cell reports **21 exported figures** and prints "Figure export check passed." Check the PNGs in `figure_instructions/figures/` and compare the generated CSVs in `figure_instructions/intermediate/` with the expected results above.
+
 ## Research questions
 
 1. **Footprint:** How large is each Big 4 institution's local economic footprint, measured with public data?
