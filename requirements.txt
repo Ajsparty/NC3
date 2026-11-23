@@ -1,5 +1,6 @@
-# NC3 analysis environment
-pandas>=2.0
+# NC3 analysis environment for pip users.
+# Conda users: use environment.yml instead (see INSTALL.md).
+pandas>=2.0,<3
 numpy>=1.24
 matplotlib>=3.7
 seaborn>=0.13
@@ -7,6 +8,6 @@ plotly>=5.18
 requests>=2.31
 lxml>=5.0
 openpyxl>=3.1
-jupyter>=1.0
 jupyterlab>=4.0
+notebook>=7.0
 ipykernel>=6.25
