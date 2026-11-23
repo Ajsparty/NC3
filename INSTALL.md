@@ -86,7 +86,7 @@ A successful run takes under 10 seconds, writes `figures/fig01_big4_employment_r
 
 ## 5. Data files
 
-All analysis inputs are small, curated CSV files committed in `Data_Files/`. `Data_Files/README.md` describes each file's source, geography, years, and caveats, and `Data_Files/source_catalog.csv` lists every source with its refresh schedule.
+All Data files are included in the attatched email.
 
 ### Which files each part of the project uses
 
@@ -122,12 +122,12 @@ Running `python Data_Files/load_retention_sources.py` (section 8) also downloads
 
 ## 6. Reproduce the project figures
 
-Every figure used in presentations, videos, and reports has an instruction notebook in `figures/`. The figure index in [`figures/README.md`](figures/README.md) lists each figure, its notebook, its inputs, and where it is used.
+Every figure used in presentations, videos, and reports has an instruction notebook in `figures_instructions/`. The figure index in [`figures_instructions/README.md`](figures_instructions/README.md) lists each figure, its notebook, its inputs, and where it is used.
 
 To reproduce a figure, either run it from the repository root:
 
 ```bash
-jupyter nbconvert --to notebook --execute --inplace figures/fig01_big4_employment_range.ipynb
+jupyter nbconvert --to notebook --execute --inplace figures_instructions/fig01_big4_employment_range.ipynb
 ```
 
 or open it in JupyterLab and choose **Kernel → Restart Kernel and Run All Cells**. Each figure notebook ends by comparing your numbers with the published figure.
@@ -175,9 +175,6 @@ Notes:
   export CENSUS_API_KEY="your_key"
   ```
 
-Downloads are written under `Data_Files/lansing_data/raw/` and `Data_Files/lansing_data/tables/`, which are excluded from version control. The scripts do **not** overwrite the curated CSV files in `Data_Files/`. Before replacing a curated file, compare its columns, geography, year, and definitions with the existing file, then update the notebooks and `Data_Files/README.md` deliberately.
-
-Sources without a download script (LAUS, IRS, BEA, CBP, IPEDS, City of Lansing ACFR tables, BS&A parcel records) follow the source-specific procedures in `Data_Files/README.md`.
 
 Do not commit:
 
@@ -185,7 +182,6 @@ Do not commit:
 - restricted or partner-confidential data;
 - full LODES state files;
 - full ACFR PDF files; or
-- regenerable large extracts stored under `Data_Files/lansing_data/`.
 
 Always review `git status` before committing.
 
@@ -193,7 +189,7 @@ Always review `git status` before committing.
 
 ### Conda cannot find `environment.yml`
 
-Confirm that the terminal is in the repository root (`pwd`, or `Get-Location` in PowerShell). The directory should contain `README.md`, `environment.yml`, `INSTALL.md`, `Data_Files/`, `figures/`, and `notebooks/`.
+Confirm that the terminal is in the repository root (`pwd`, or `Get-Location` in PowerShell). The directory should contain `README.md`, `environment.yml`, `INSTALL.md`, `figure_instructions/`, and `notebooks/`.
 
 ### `conda activate nc3` fails
 
@@ -212,12 +208,6 @@ where.exe jupyter
 ```bash
 which jupyter
 ```
-
-The first result should be inside the `nc3` environment folder. Restart the terminal after activating if necessary.
-
-### A notebook reports missing data files
-
-Check the exact filenames in `Data_Files/` (`Get-ChildItem Data_Files` in PowerShell). Filenames are case-sensitive on some operating systems. For `03_benefit.ipynb`, also check that `Data_Files/lansing_data/raw/mi_xwalk.csv.gz` exists (section 5).
 
 ### Jupyter uses the wrong Python environment
 
@@ -271,11 +261,3 @@ Changes are made on a branch and merged into `main` through a pull request.
    ```
 
 4. After review, merge the pull request into `main`, then update your local copy with `git switch main` and `git pull --ff-only origin main`.
-
-## 11. Current reproducibility limitations
-
-- The download scripts automate QCEW, LODES, and ACS. LAUS, IRS, BEA, CBP, IPEDS, the City of Lansing ACFR tables, and BS&A parcel records are retrieved manually, as described in `Data_Files/README.md`.
-- The scripts write fresh downloads alongside, not over, the curated CSV files. An annual update therefore combines automated retrieval, manual retrieval, validation of schemas, geography, years, and definitions, and deliberate replacement of curated files.
-- `03_benefit.ipynb` needs one public file that is not committed (the LODES crosswalk, section 5).
-
-Record the retrieval date and source release for every annual update.
