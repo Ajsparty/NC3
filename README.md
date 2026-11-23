@@ -72,10 +72,8 @@ This repository is the main organizational space for the NC3 analysis. Keep the 
 
 | Folder | Purpose |
 | --- | --- |
-| `Team_Management_Files/` | Team Charter, meeting notes, weekly 3x3 reports, and signed agreements |
 | `Project_Deliverables/` | Official submissions such as proposals, presentations, videos, and the final report |
 | `Individual_TeamMember_files/` | Individual working files and drafts |
-| `Data_Files/` | Datasets and other project data files |
 | `figures/` | Figure reproducibility notebooks and exported figures (see `figures/README.md`) |
 | `figure_instructions/` | Notebook that rebuilds and exports every project figure |
 | `notebooks/` | Shared analysis and partner-meeting notebooks |
